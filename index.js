@@ -59,33 +59,11 @@ client.connect((err) => {
   // Read specific user order
   app.get("/orderDetail", (req, res) => {
     // console.log(req.query.email);
-    const bearer = req.headers.authorization;
-    if (bearer && bearer.startsWith("Bearer")) {
-      const idToken = bearer.split(" ")[1];
-      // idToken comes from the client app
-      admin
-        .auth()
-        .verifyIdToken(idToken)
-        .then((decodedToken) => {
-          // const uid = decodedToken.uid;
-          const tokenEmail = decodedToken.email;
-          const queryEmail = req.query.email;
-          if (tokenEmail == queryEmail) {
-            orderCollection
-              .find({ email: req.query.email })
-              .toArray((err, documents) => {
-                res.status(200).send(documents);
-              });
-          } else {
-            res.status(401).send("Un-authorized access");
-          }
-        })
-        .catch((error) => {
-          res.status(401).send("Un-authorized access");
-        });
-    } else {
-      res.status(401).send("Un-authorized access");
-    }
+    orderCollection
+      .find({ email: req.query.email })
+      .toArray((err, documents) => {
+        res.send(documents);
+      });
   });
 
   // Delete
