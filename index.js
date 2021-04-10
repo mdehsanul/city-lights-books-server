@@ -1,4 +1,5 @@
 const express = require("express");
+const MongoClient = require("mongodb").MongoClient;
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const ObjectID = require("mongodb").ObjectID;
@@ -20,7 +21,6 @@ admin.initializeApp({
 });
 
 // Mongodb
-const MongoClient = require("mongodb").MongoClient;
 const { response } = require("express");
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.7ajpn.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, {
